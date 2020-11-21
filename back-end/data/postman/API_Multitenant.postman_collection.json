@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "5c207b88-2d64-4083-9cdd-19b620210fbf",
+		"name": "API_Multitenant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8082/datasource/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjA1NTExNjUxLCJleHAiOjE2MDYxMTY0NTF9.eX1yzCM_P2bmnDQ0-BLHb90fDXBE0jSoEOYC5BhZEkq5mHLHCFtpqd7_-Cif0gig1TXETkeEzoYiEqHSyz1faQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\": \"tenant2\",\n\"url\": \"jdbc:mysql://localhost:3306/tenant2\",\n\"username\": \"root\",\n\"password\": \"root123456\",\n\"driverClassName\": \"com.mysql.cj.jdbc.Driver\",\n\"initialize\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/datasource/",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"datasource",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8082/authen/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
