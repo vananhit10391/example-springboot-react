@@ -1,0 +1,108 @@
+allprojects {
+    group 'vananh.example'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+buildscript {
+    ext {
+        springBootVersion = '2.3.5.RELEASE'
+        springManagementVersion = '1.0.10.RELEASE'
+        lombokVersion = '1.18.16'
+        guavaVersion = '30.0-jre'
+        commonLang3Version = '3.11'
+        jjwtVersion = '0.9.1'
+        validationApiVersion = '2.0.1.Final'
+        activeMQVersion = '2.3.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${springManagementVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    sourceCompatibility = 15
+    targetCompatibility = 15
+
+    def defaultEncoding = 'UTF-8'
+    tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
+
+    javadoc {
+        options.encoding = defaultEncoding
+        options.addBooleanOption('Xdoclint:none', true)
+    }
+
+    compileJava.dependsOn(processResources)
+
+    springBoot {
+        buildInfo()
+    }
+
+    dependencies{
+        compile('org.springframework.boot:spring-boot-starter-web')
+        // Spring dependencies
+        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        compile group: 'javax.validation', name: 'validation-api', version: "${validationApiVersion}"
+        runtimeOnly 'mysql:mysql-connector-java'
+
+        // Security and authentication
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        testImplementation 'org.springframework.security:spring-security-test'
+        compile group: 'io.jsonwebtoken', name: 'jjwt', version: "${jjwtVersion}"
+
+        // Utilities
+        compile group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: "${commonLang3Version}"
+
+        // ActiveMQ
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-activemq', version: "${activeMQVersion}"
+
+        // Test
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+
+}
+
+project(':multi-tenant') {
+    dependencies {
+        implementation project(':common')
+        compile('org.springframework.boot:spring-boot-devtools')
+    }
+}
+
+project(':master') {
+    dependencies {
+        implementation project(':common')
+        compile('org.springframework.boot:spring-boot-devtools')
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    }
+}
+
+project(':common'){
+
+}
+
+gradle.buildFinished {
+    project.buildDir.deleteDir()
+}

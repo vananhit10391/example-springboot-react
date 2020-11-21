@@ -1,0 +1,38 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "vananh.example.common.config.AppProperties",
+      "sourceType": "vananh.example.common.config.AppProperties"
+    },
+    {
+      "name": "app.auth",
+      "type": "vananh.example.common.config.AppProperties$Auth",
+      "sourceType": "vananh.example.common.config.AppProperties"
+    },
+    {
+      "name": "app.oauth2",
+      "type": "vananh.example.common.config.AppProperties$OAuth2",
+      "sourceType": "vananh.example.common.config.AppProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.auth.token-expiration-msec",
+      "type": "java.lang.Long",
+      "sourceType": "vananh.example.common.config.AppProperties$Auth",
+      "defaultValue": 0
+    },
+    {
+      "name": "app.auth.token-secret",
+      "type": "java.lang.String",
+      "sourceType": "vananh.example.common.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.oauth2.authorized-redirect-uris",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "vananh.example.common.config.AppProperties$OAuth2"
+    }
+  ],
+  "hints": []
+}

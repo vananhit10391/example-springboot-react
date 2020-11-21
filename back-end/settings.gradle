@@ -1,0 +1,5 @@
+rootProject.name = 'back-end'
+include 'multi-tenant'
+include 'common'
+include 'master'
+

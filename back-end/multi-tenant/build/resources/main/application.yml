@@ -1,0 +1,22 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/multitenant_db
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+app:
+  auth:
+    tokenSecret: luckymonkey
+    tokenExpirationMsec: 604800000
+active-mq:
+  broker-url: tcp://localhost:61616
+  multi-topic: multi-topic
